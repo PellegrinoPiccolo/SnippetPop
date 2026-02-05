@@ -13,6 +13,10 @@ export const SnippetContext = createContext({
     createCategory: (category: Category) => {},
     updateCategory: (category: Category) => {},
     deleteCategory: (categoryId: string) => {},
+    selectedCategoryId: null as string | null,
+    setSelectedCategoryId: (categoryId: string | null) => {},
+    currentView: 'snippets' as 'snippets' | 'settings',
+    setCurrentView: (view: 'snippets' | 'settings') => {},
 });
 
 const DEFAULT_CATEGORIES: Category[] = [
@@ -20,7 +24,7 @@ const DEFAULT_CATEGORIES: Category[] = [
         id: uuidv4(),
         name: 'Work',
         icon: 'work',
-        color: '#8B5CF6',
+        color: 'purple',
         snippets: [
             { id: uuidv4(), title: 'Office WiFi Password', content: 'a1b2c3d4' },
             { id: uuidv4(), title: 'Meeting Zoom Link', content: 'https://zoom.us/j/1234567890' },
@@ -33,7 +37,7 @@ const DEFAULT_CATEGORIES: Category[] = [
         id: uuidv4(),
         name: 'Home',
         icon: 'home',
-        color: '#F59E0B',
+        color: 'yellow',
         snippets: [
             { id: uuidv4(), title: 'Home Router Password', content: 'HomeNetwork2024!' },
             { id: uuidv4(), title: 'Grocery List Template', content: '– Milk – Eggs – Bread' },
@@ -43,7 +47,7 @@ const DEFAULT_CATEGORIES: Category[] = [
         id: uuidv4(),
         name: 'Personal',
         icon: 'person',
-        color: '#10B981',
+        color: 'red',
         snippets: [
             { id: uuidv4(), title: 'Favorite Quote', content: 'The only way to do great work is to love what you do. — Steve Jobs' },
             { id: uuidv4(), title: 'GitHub Profile URL', content: 'https://github.com/johndoe' },
@@ -57,6 +61,8 @@ const SnippetProvider = ({ children }: { children: React.ReactNode }) => {
         const saved = window.electronAPI.getStoreValue('categories');
         return saved ? JSON.parse(saved) : DEFAULT_CATEGORIES;
     });
+    const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+    const [currentView, setCurrentView] = useState<'snippets' | 'settings'>('snippets');
 
     useEffect(() => {
         window.electronAPI.setStoreValue('categories', JSON.stringify(categories));
@@ -121,7 +127,7 @@ const SnippetProvider = ({ children }: { children: React.ReactNode }) => {
 
 
     return (
-        <SnippetContext.Provider value={{ categories, setCategories, saveCategories, createSnippet, updateSnippet, deleteSnippet, createCategory, updateCategory, deleteCategory }}>
+        <SnippetContext.Provider value={{ categories, setCategories, saveCategories, createSnippet, updateSnippet, deleteSnippet, createCategory, updateCategory, deleteCategory, selectedCategoryId, setSelectedCategoryId, currentView, setCurrentView }}>
             {children}
         </SnippetContext.Provider>
     )
