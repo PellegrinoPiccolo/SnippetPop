@@ -12,5 +12,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   },
   setStoreValue: (key, value) => {
     store.set(key, value);
+  },
+  deleteStoreValue: (key) => {
+    store.delete(key);
   }
 })

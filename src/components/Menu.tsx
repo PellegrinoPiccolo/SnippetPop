@@ -1,35 +1,38 @@
 import React from 'react'
+import { SnippetContext } from '../context/SnippetContext';
+import { getIconComponent } from '../utils/icons';
+import { LuFiles } from "react-icons/lu";
 
 const Menu = () => {
-  const categories = [
-    { name: 'Tutti', icon: '📁', count: 24 },
-    { name: 'JavaScript', icon: '🟨', count: 8 },
-    { name: 'TypeScript', icon: '🔷', count: 6 },
-    { name: 'React', icon: '⚛️', count: 5 },
-    { name: 'CSS', icon: '🎨', count: 3 },
-    { name: 'HTML', icon: '🌐', count: 2 },
-  ]
+  const {categories} = React.useContext(SnippetContext);
+
+  const CategoryButtonRender = ({category}: {category: {name: string, icon: string}}) => {
+    return (
+      <button className="w-full flex items-center justify-between p-3 hover:bg-gray-800 rounded-lg transition-all mb-1 group">
+        <div className="flex items-center gap-3">
+          <span className="text-xl bg-[#161616] rounded-lg p-2">{React.createElement(getIconComponent(category.icon))}</span>
+          <span className="font-medium">{category.name}</span>
+        </div>
+      </button>
+    )
+  }
 
   return (
-    <div className="h-full bg-gray-900 text-white flex flex-col">
-      <div className="p-4 border-b border-gray-700">
-        <h2 className="text-lg font-semibold mb-2">Categorie</h2>
+    <div className="h-full bg-[#0A0A0A] flex flex-col">
+      <div className="p-4 flex flex-row items-center gap-2">
+        <img src="/logo.png" alt="Logo" className="w-10 h-10 mb-2" />
+        <h2 className="text-lg font-semibold mb-2">SnippetPop</h2>
       </div>
       
       <div className="flex-1 overflow-y-auto p-2">
+        <button className="w-full flex items-center justify-between p-3 hover:bg-gray-800 rounded-lg transition-all mb-4 group">
+          <div className="flex items-center gap-3">
+            <span className="text-xl"><LuFiles /></span>
+            <span className="font-medium">Tutti gli snippet</span>
+          </div>
+        </button>
         {categories.map((category, index) => (
-          <button
-            key={index}
-            className="w-full flex items-center justify-between p-3 hover:bg-gray-800 rounded-lg transition-all mb-1 group"
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-xl">{category.icon}</span>
-              <span className="font-medium">{category.name}</span>
-            </div>
-            <span className="text-sm text-gray-400 group-hover:text-white">
-              {category.count}
-            </span>
-          </button>
+          <CategoryButtonRender key={index} category={category} />
         ))}
       </div>
 
