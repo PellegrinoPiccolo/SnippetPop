@@ -12,8 +12,6 @@ function createWindow () {
     webPreferences: {
       preload: path.join(__dirname, 'preload.js')
     },
-    titleBarStyle: 'hidden',
-    backgroundColor: '#1e1e1e',
   })
 
   if(!app.isPackaged) {
