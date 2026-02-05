@@ -3,7 +3,7 @@ import Store from 'electron-store';
 
 const store = new Store();
 
-contextBridge.exposeInMainWorld('versions', {
+contextBridge.exposeInMainWorld('electronAPI', {
   node: () => process.versions.node,
   chrome: () => process.versions.chrome,
   electron: () => process.versions.electron,
@@ -13,5 +13,4 @@ contextBridge.exposeInMainWorld('versions', {
   setStoreValue: (key, value) => {
     store.set(key, value);
   }
-  // we can also expose variables, not just functions
 })

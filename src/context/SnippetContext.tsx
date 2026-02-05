@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import type { Category } from "../types/Category";
 import type { Snippet } from "../types/Snippet";
+import { v4 as uuidv4 } from 'uuid';
 
 export const SnippetContext = createContext({
     categories : [] as Category[],
@@ -14,10 +15,47 @@ export const SnippetContext = createContext({
     deleteCategory: (categoryId: string) => {},
 });
 
+const DEFAULT_CATEGORIES: Category[] = [
+    {
+        id: uuidv4(),
+        name: 'Work',
+        icon: 'work',
+        color: '#8B5CF6',
+        snippets: [
+            { id: uuidv4(), title: 'Office WiFi Password', content: 'a1b2c3d4' },
+            { id: uuidv4(), title: 'Meeting Zoom Link', content: 'https://zoom.us/j/1234567890' },
+            { id: uuidv4(), title: 'Email Signature', content: 'Best regards, John Doe | Senior Developer | john@company.com' },
+            { id: uuidv4(), title: 'SQL Connection String', content: 'Server=localhost;Database=mydb;User Id=admin;Password=***' },
+            { id: uuidv4(), title: 'API Key - Production', content: 'sk_prod_1234567890abcdefg...' },
+        ],
+    },
+    {
+        id: uuidv4(),
+        name: 'Home',
+        icon: 'home',
+        color: '#F59E0B',
+        snippets: [
+            { id: uuidv4(), title: 'Home Router Password', content: 'HomeNetwork2024!' },
+            { id: uuidv4(), title: 'Grocery List Template', content: '– Milk – Eggs – Bread' },
+        ],
+    },
+    {
+        id: uuidv4(),
+        name: 'Personal',
+        icon: 'person',
+        color: '#10B981',
+        snippets: [
+            { id: uuidv4(), title: 'Favorite Quote', content: 'The only way to do great work is to love what you do. — Steve Jobs' },
+            { id: uuidv4(), title: 'GitHub Profile URL', content: 'https://github.com/johndoe' },
+            { id: uuidv4(), title: 'Doctor Appointment Reminder', content: 'Dr. Smith — Thursday 3:00 PM — 555-0123' },
+        ],
+    },
+];
+
 const SnippetProvider = ({ children }: { children: React.ReactNode }) => {
     const [categories, setCategories] = useState<Category[]>(() => {
         const saved = window.electronAPI.getStoreValue('categories');
-        return saved ? JSON.parse(saved) : [];
+        return saved ? JSON.parse(saved) : DEFAULT_CATEGORIES;
     });
 
     useEffect(() => {
