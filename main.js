@@ -1,6 +1,9 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'path'
 import { fileURLToPath } from 'url' // Aggiungi questa
+import Store from 'electron-store';
+
+Store.initRenderer();
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
