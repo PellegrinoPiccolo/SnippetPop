@@ -76,7 +76,7 @@ const Menu = () => {
           ${currentView === 'settings' ? 'bg-[#1E1E1E] text-white shadow-[0_6px_20px_rgba(0,0,0,0.35)]' : 'text-[#9B9B9B] hover:bg-[#1A1A1A] hover:text-white'}`}
           onClick={() => setCurrentView('settings')}
         >
-          <span className={`text-lg rounded-xl p-2 ${currentView === 'settings' ? 'bg-gradient-to-br from-blue-500 to-pink-500' : 'bg-[#141414]'}`}>
+          <span className={`text-lg rounded-xl p-2 ${currentView === 'settings' ? 'bg-gradient-to-br from-blue-500 to-purple-500 shadow-lg' : 'bg-[#141414]'}`}>
             <LuSettings />
           </span>
           <span className="text-xs font-medium">Settings</span>
