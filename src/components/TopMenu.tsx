@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import SearchBar from './utils/SearchBar'
+import SearchBar from './ui/SearchBar'
 import { FaPlus } from "react-icons/fa6";
 
 const TopMenu = () => {
@@ -15,7 +15,7 @@ const TopMenu = () => {
   }, [searchText])
 
   return (
-    <div className="h-full bg-[#0A0A0A] flex items-center px-4 py-3 gap-4 justify-around border-l border-[#161616]">
+    <div className="h-full bg-[#0A0A0A] flex items-center px-10 py-3 gap-4 justify-between border-l border-[#161616]">
       <div className='max-w-sm w-full'>
         <SearchBar searchText={searchText} onSearchTextChange={onSearchTextChange} textPlaceholder="Search snippets..." />
       </div>
