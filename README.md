@@ -2,8 +2,8 @@
 
 **SnippetPop** is a lightweight, cross-platform snippet manager designed for developers who want to organize their code and technical notes without relying on centralized databases or expensive cloud subscriptions.
 
-[![Windows Download](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](#)
-[![macOS Download](https://img.shields.io/badge/Download-macOS%20.dmg-black?style=for-the-badge&logo=apple)](#)
+[![Windows Download](https://img.shields.io/badge/Download-Windows%20.zip-blue?style=for-the-badge&logo=windows)](https://github.com/PellegrinoPiccolo/SnippetPop/archive/refs/tags/V-1.0.zip)
+[![macOS Download](https://img.shields.io/badge/Download-macOS%20.dmg-black?style=for-the-badge&logo=apple)](https://github.com/PellegrinoPiccolo/SnippetPop/releases/download/V-1.0/SnippetPop.Installer.dmg)
 
 ---
 
