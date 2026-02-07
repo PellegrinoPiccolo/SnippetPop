@@ -84,6 +84,21 @@ const SnippetProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     const createSnippet = (newSnippet: Snippet) => {
+        if(newSnippet.title.trim() === "") {
+            throw new Error("Snippet title cannot be empty.");
+        } else if (newSnippet.title.length > 100) {
+            throw new Error("Snippet title cannot exceed 100 characters.");
+        } else if (newSnippet.content.trim() === "") {
+            throw new Error("Snippet content cannot be empty.");
+        } else if (newSnippet.content.length > 1000) {
+            throw new Error("Snippet content cannot exceed 1000 characters.");
+        } else if (!newSnippet.categoryId) {
+            throw new Error("Snippet must belong to a category.");
+        } else if (!categories.some(category => category.id === newSnippet.categoryId)) {
+            throw new Error("The specified category does not exist.");
+        } else if (categories.some(category => category.snippets && category.snippets.some(snippet => snippet.title.toLowerCase() === newSnippet.title.toLowerCase()))) {
+            throw new Error("A snippet with this title already exists in the category.");
+        }
         const updatedCategories = categories.map(category => {
             if (category.id === newSnippet.categoryId) {
                 return {
@@ -121,7 +136,19 @@ const SnippetProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     const createCategory = (newCategory: Category) => {
+        if(newCategory.name.trim() === "") {
+            throw new Error("Category name cannot be empty.");
+        } else if (newCategory.name.length > 50) {
+            throw new Error("Category name cannot exceed 50 characters.");
+        } else if (!newCategory.color) {
+            throw new Error("Category color is required.");
+        } else if (!newCategory.icon) {
+            throw new Error("Category icon is required.");
+        } else if (categories.some(category => category.name.toLowerCase() === newCategory.name.toLowerCase())) {
+            throw new Error("A category with this name already exists.");
+        }
         setCategories([...categories, newCategory]);
+        
     }
 
     const updateCategory = (updatedCategory: Category) => {

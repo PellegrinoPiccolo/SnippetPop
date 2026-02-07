@@ -13,6 +13,11 @@ export const COLORS: Record<string, string> = {
 
 export const AVAILABLE_COLORS = Object.keys(COLORS);
 
-export const getColorHex = (colorName: string): string => {
-    return COLORS[colorName] || '#6B7280';
+export const getColorHex = (colorName: string, opacity: number = 1): string => {
+    const hex = COLORS[colorName] || '#6B7280';
+    if (opacity === 1) return hex;
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 }
