@@ -1,5 +1,7 @@
 {
   "name": "SnippetPop",
+  "author": "Pellegrino Piccolo",
+  "description": "A snippet manager built with Electron, React, and Tailwind CSS.",
   "private": true,
   "version": "0.0.0",
   "type": "module",
