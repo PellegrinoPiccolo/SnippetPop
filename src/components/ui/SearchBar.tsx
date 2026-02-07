@@ -1,4 +1,5 @@
 import { IoIosSearch } from "react-icons/io";
+import { IoClose } from "react-icons/io5";
 
 const SearchBar = ({searchText, onSearchTextChange, textPlaceholder} : {searchText: string, onSearchTextChange: (text: string) => void, textPlaceholder: string}) => {
   return (
@@ -11,6 +12,11 @@ const SearchBar = ({searchText, onSearchTextChange, textPlaceholder} : {searchTe
             onChange={(e) => onSearchTextChange(e.target.value)}
             className="w-full focus:outline-none bg-transparent"
         />
+        {searchText && (
+            <button onClick={() => onSearchTextChange("")} className="ml-2 cursor-pointer hover:bg-gray-400/30 p-1 rounded">
+                <IoClose />
+            </button>
+        )}
     </div>
   )
 }
