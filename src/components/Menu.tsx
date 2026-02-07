@@ -4,7 +4,7 @@ import { getIconComponent } from '../utils/icons';
 import { LuFiles } from "react-icons/lu";
 import { getColorHex } from '../utils/colors';
 import { LuSettings } from "react-icons/lu";
-import { IoFolderOpenOutline } from "react-icons/io5";
+import { LuFolderSync } from "react-icons/lu";
 
 const Menu = () => {
   const {categories, selectedCategoryId, setSelectedCategoryId, currentView, setCurrentView, changeLibraryPath} = React.useContext(SnippetContext);
@@ -90,7 +90,7 @@ const Menu = () => {
           className='flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer text-[#9B9B9B] hover:bg-[#1A1A1A] hover:text-white'
           onClick={handleChangeLibraryPath}
         >
-          <IoFolderOpenOutline size={20} />
+          <LuFolderSync size={20} />
         </button>
       </div>
     </div>
