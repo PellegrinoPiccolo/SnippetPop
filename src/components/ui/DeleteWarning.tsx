@@ -26,7 +26,7 @@ const DeleteWarning = ({ onDelete, numberOfItems, itemName, type }: { onDelete: 
             {numberOfItems && !itemName ? (
                 <p className="text-sm text-gray-400">{`This will delete ${numberOfItems} ${type === "category" ? "categories" : "snippets"}.`}</p>
             ) : itemName ? (
-                <p className="text-sm text-gray-400">{`This will delete the ${type === "category" ? "category" : "snippet"} "${itemName}".`}</p>
+                <p className="text-sm text-gray-400">{`This will delete the ${type === "category" ? "category" : "snippet"} "${itemName}". ${type === "category" ? 'All snippets within this category will also be deleted.' : ''}`}</p>
             ) : null}
         </div>
         <div className="flex justify-end gap-4 p-8">

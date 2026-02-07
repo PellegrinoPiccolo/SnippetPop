@@ -38,7 +38,7 @@ const SettingsSection = () => {
     }
 
   return (
-    <div className="h-full bg-black py-8 px-10">
+    <div className="h-full bg-black py-8 px-10 overflow-y-auto">
         <h1 className="text-2xl font-bold text-white">Category Settings</h1>
         <div className='p-4 bg-[#0A0A0A] border border-gray-400/20 mt-10 rounded-lg flex flex-col'>
             <div className='flex items-center justify-between'>
