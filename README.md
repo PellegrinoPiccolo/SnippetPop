@@ -1,73 +1,71 @@
-# React + TypeScript + Vite
+# 🚀 SnippetPop
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**SnippetPop** is a lightweight, cross-platform snippet manager designed for developers who want to organize their code and technical notes without relying on centralized databases or expensive cloud subscriptions.
 
-Currently, two official plugins are available:
+[![Windows Download](https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows)](#)
+[![macOS Download](https://img.shields.io/badge/Download-macOS%20.dmg-black?style=for-the-badge&logo=apple)](#)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🛠️ Key Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* **Intelligent Organization**: Categorize your snippets with custom icons and dedicated colors.
+* **Zero Backend**: No servers, no registration. Your data stays under your control.
+* **"Redirect" Cloud Sync**: Effortlessly sync your snippets using **Google Drive, Dropbox, OneDrive**, or even a simple USB drive thanks to folder redirection technology.
+* **Modern Interface**: Built with **React** and **Vite** for lightning-fast performance.
+* **Local Security**: All data is saved in JSON format on your local disk or chosen cloud folder.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🏗️ How the Sync Works
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+SnippetPop uses a unique **two-layer** architecture to ensure maximum flexibility:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+1.  **The Compass (`rootStore`)**: A local configuration (saved in system app data) that remembers where your library is located.
+2.  **The Treasure (`snippetpop-data.json`)**: The actual file containing all your snippets.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Why is this great?
+When you change the library folder in the settings, the app migrates your data to the new location (e.g., your Google Drive folder) and restarts. From then on, every change is saved directly to the cloud. If you install SnippetPop on another computer and select the same folder, the app will detect the existing data and load it instantly.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+
+---
+
+## 💻 Tech Stack
+
+* **Core**: [Electron](https://www.electronjs.org/)
+* **Frontend**: [React](https://reactjs.org/) with TypeScript
+* **Build Tool**: [Vite](https://vitejs.dev/) & [Electron Forge](https://www.electronforge.io/)
+* **Database**: `electron-store`
+* **Installer**: NSIS (Windows) & DMG (macOS)
+
+---
+
+## 🚀 Getting Started
+
+To contribute to the project or build it locally:
+
+### Prerequisites
+* **Node.js** (v18 or higher)
+* **npm**
+
+### Installation
+1.  Clone the repository:
+    ```bash
+    git clone [https://github.com/your-username/snippetpop.git](https://github.com/your-username/snippetpop.git)
+    ```
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+3.  Run in development mode:
+    ```bash
+    npm run dev
+    ```
+
+### Packaging (Build)
+To generate the installer (.exe or .dmg) for your current operating system:
+```bash
+npm run make
