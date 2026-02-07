@@ -20,7 +20,7 @@ const SnippetCard = ({snippet, categoryName, categoryColor} : {snippet: Snippet,
 
   const [isClicked, setIsClicked] = useState(false);
   const {openModal} = useContext(ModalContext)
-  const {deleteSnippet} = useContext(SnippetContext)
+  const {deleteSnippet, selectedSnippetIds, setSelectedSnippetIds, isActiveSelectionMode} = useContext(SnippetContext)
 
   useEffect (() => {
     if (isClicked) {
@@ -42,30 +42,56 @@ const SnippetCard = ({snippet, categoryName, categoryColor} : {snippet: Snippet,
     )
   }
 
+  const handleSelect = () => {
+    if (selectedSnippetIds.includes(snippet.id)) {
+      setSelectedSnippetIds(selectedSnippetIds.filter(id => id !== snippet.id));
+    } else {
+      setSelectedSnippetIds([...selectedSnippetIds, snippet.id]);
+    }
+  }
+
   return (
     <div 
-      className="w-full rounded-lg bg-[#0A0A0A] h-full border border-[#161616] py-4 px-6 transition-shadow duration-200 flex items-center justify-between gap-4 group"
+      className={`w-full rounded-lg bg-[#0A0A0A] h-full border py-4 px-6 transition-shadow duration-200 flex items-center justify-between gap-4 group ${isActiveSelectionMode ? 'cursor-pointer' : ''} ${selectedSnippetIds.includes(snippet.id) ? 'border-red-500/30' : 'border-[#161616]'}`}
       onMouseEnter={(e) => e.currentTarget.style.boxShadow = `0 0 22px ${withAlpha(categoryColor, 0.35)}`}
       onMouseLeave={(e) => e.currentTarget.style.boxShadow = "none"}
+      onClick={() => {isActiveSelectionMode ? handleSelect() : {}}}
     >
       <div className="flex flex-col h-full gap-2 flex-1 min-w-0">
         <div className="flex items-center gap-2">
+          {isActiveSelectionMode && (
+            selectedSnippetIds.includes(snippet.id) ? (
+              <>
+              <div className="w-5 h-5 rounded-lg border border-red-500/30 bg-red-500/10 text-red-500 flex items-center justify-center" >
+                <FaCheck size={10} className="text-red-500"/>
+              </div>
+              </>
+            ) : (
+              <>
+                <div className="w-5 h-5 rounded-lg border border-gray-500 flex items-center justify-center" />
+              </>
+            )
+          )}
           <p className="text-lg text-white truncate">{snippet.title}</p>
           <span className="text-[10px] py-0.5 px-1 rounded-sm border" style={{color: categoryColor ? categoryColor : 'gray', backgroundColor: withAlpha(categoryColor, 0.1), borderColor: withAlpha(categoryColor, 0.1)}}>{categoryName}</span>
         </div>
         <p className="text-sm text-gray-400 line-clamp-3">{snippet.content}</p>
       </div>
-        <div className="shrink-0 flex flex-row items-center gap-2">
-          <button className="bg-red-500/10 p-3 rounded-lg hidden group-hover:flex border border-red-500/30 opacity-70 hover:opacity-100 cursor-pointer" onClick={handleDelete}>
-            <FaRegTrashAlt size={15} className="text-red-500"/>
-          </button>
-          <button
-            className={`p-3 border rounded-lg ${isClicked ? 'bg-green-500/30 border-green-500/50 text-green-500' : 'bg-[#1A1A1A] border-[#161616] opacity-50 text-white'} transition-colors duration-200 hover:opacity-100 cursor-pointer`}
-            onClick={handleCopy}
-          >
-            {isClicked ? <FaCheck size={15}/> : <LuCopy size={15}/>}
-          </button>
-        </div>
+      <div className="shrink-0 flex flex-row items-center gap-2">
+        {!isActiveSelectionMode && (
+          <>
+            <button className="bg-red-500/10 p-3 rounded-lg hidden group-hover:flex border border-red-500/30 opacity-70 hover:opacity-100 cursor-pointer" onClick={handleDelete}>
+              <FaRegTrashAlt size={15} className="text-red-500"/>
+            </button>
+            <button
+              className={`p-3 border rounded-lg ${isClicked ? 'bg-green-500/30 border-green-500/50 text-green-500' : 'bg-[#1A1A1A] border-[#161616] opacity-50 text-white'} transition-colors duration-200 hover:opacity-100 cursor-pointer`}
+              onClick={handleCopy}
+            >
+              {isClicked ? <FaCheck size={15}/> : <LuCopy size={15}/>}
+            </button>
+          </>
+        )}
+      </div>
     </div>
   )
 }

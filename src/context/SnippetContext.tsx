@@ -18,6 +18,10 @@ export const SnippetContext = createContext({
     setSelectedCategoryId: (categoryId: string | null) => {},
     currentView: 'snippets' as 'snippets' | 'settings',
     setCurrentView: (view: 'snippets' | 'settings') => {},
+    isActiveSelectionMode: false,
+    setIsActiveSelectionMode: (isActive: boolean) => {},
+    selectedSnippetIds: [] as string[],
+    setSelectedSnippetIds: (snippetIds: string[]) => {},
 });
 
 const categoryId1 = uuidv4();
@@ -68,6 +72,8 @@ const SnippetProvider = ({ children }: { children: React.ReactNode }) => {
     });
     const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
     const [currentView, setCurrentView] = useState<'snippets' | 'settings'>('snippets');
+    const [isActiveSelectionMode, setIsActiveSelectionMode] = useState(false);
+    const [selectedSnippetIds, setSelectedSnippetIds] = useState<string[]>([]);
 
     useEffect(() => {
         window.electronAPI.setStoreValue('categories', JSON.stringify(categories));
@@ -142,7 +148,7 @@ const SnippetProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     return (
-        <SnippetContext.Provider value={{ categories, setCategories, saveCategories, createSnippet, updateSnippet, deleteSnippet, createCategory, updateCategory, deleteCategory, deleteMultipleSnippets, selectedCategoryId, setSelectedCategoryId, currentView, setCurrentView }}>
+        <SnippetContext.Provider value={{ categories, setCategories, saveCategories, createSnippet, updateSnippet, deleteSnippet, createCategory, updateCategory, deleteCategory, deleteMultipleSnippets, selectedCategoryId, setSelectedCategoryId, currentView, setCurrentView, isActiveSelectionMode, setIsActiveSelectionMode, selectedSnippetIds, setSelectedSnippetIds }}>
             {children}
         </SnippetContext.Provider>
     )

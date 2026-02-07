@@ -5,12 +5,18 @@ import type { Category } from '../types/Category';
 import SnippetCard from './ui/SnippetCard';
 import { getColorHex } from '../utils/colors';
 import { SearchContext } from '../context/SearchContext';
+import { IoMdCheckboxOutline } from "react-icons/io";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { IoClose } from "react-icons/io5";
+import { ModalContext } from '../context/ModalContext';
+import DeleteWarning from './ui/DeleteWarning';
 
 const Content = () => {
 
-  const {currentView, selectedCategoryId, categories} = React.useContext(SnippetContext);
+  const {currentView, selectedCategoryId, categories, selectedSnippetIds, isActiveSelectionMode, setIsActiveSelectionMode, setSelectedSnippetIds, deleteMultipleSnippets} = React.useContext(SnippetContext);
   const {snippetsFiltered, searchQuery} = React.useContext(SearchContext);
   const [actualCategory, setActualCategory] = React.useState(null as Category | null);
+  const {openModal} = React.useContext(ModalContext)
 
   React.useEffect(() => {
     if (currentView === 'snippets') {
@@ -30,11 +36,42 @@ const Content = () => {
     }
   }, [currentView, selectedCategoryId, categories, snippetsFiltered]);
 
+  // Settings section
   if (currentView === 'settings') {
     return (
       <div className="h-full bg-black py-8 px-10">
         <h1 className="text-2xl font-bold text-white">Settings</h1>
       </div>
+    )
+  }
+
+  // Snippet section
+
+  const handleCloseSelectionMode = () => {
+    setIsActiveSelectionMode(false);
+    setSelectedSnippetIds([]);
+  }
+
+  const handleSelectAll = () => {
+    const allSnippetIds = snippetsFiltered?.map(snippet => snippet.id) || [];
+    setSelectedSnippetIds(allSnippetIds);
+  }
+
+  const handleDeselectAll = () => {
+    setSelectedSnippetIds([]);
+  }
+
+  const toggleSelectAll = () => {
+    if (selectedSnippetIds.length === snippetsFiltered?.length) {
+      handleDeselectAll();
+    } else {
+      handleSelectAll();
+    }
+  }
+
+  const handleDelete = () => {
+    openModal(
+      <DeleteWarning onDelete={() => {deleteMultipleSnippets(selectedSnippetIds), setSelectedSnippetIds([]), setIsActiveSelectionMode(false)}} numberOfItems={selectedSnippetIds.length} itemName={null} />
     )
   }
 
@@ -50,7 +87,7 @@ const Content = () => {
   }
 
   return (
-    <div className="h-full bg-black py-8 px-10 overflow-y-auto">
+    <div className="h-full bg-black py-8 px-10 overflow-y-auto relative">
       <h1 className="text-2xl font-bold text-white">{actualCategory?.name}</h1>
       <span className="text-sm text-gray-400">{snippetsFiltered?.length || 0} snippets {searchQuery && `matching "${searchQuery}"`}</span>
     
@@ -59,6 +96,29 @@ const Content = () => {
           <RenderSnippet key={snippet.id} {...snippet} />
         ))}
       </div>
+
+      {isActiveSelectionMode && (
+        <div className='absolute bottom-6 inset-x-0 flex justify-center pointer-events-none'>
+          <div className='pointer-events-auto bg-[#0A0A0A] border border-[#212121] py-2 px-4 rounded-xl shadow-2xl flex items-center gap-2'>
+            <div className='flex items-center gap-2 border-r border-gray-500/20 px-4 py-2'>
+              <IoMdCheckboxOutline size={22} className='text-blue-500'/>
+              <span className='text-sm text-gray-200 font-bold'>{selectedSnippetIds.length} snippet{selectedSnippetIds.length > 1 ? 's' : ''} selected</span>
+            </div>
+            <div className='flex items-center gap-2 px-10'>
+              <button className='text-gray-300 hover:bg-gray-400/10 border border-transparent hover:border-gray-400/30 px-3 py-2 rounded-lg cursor-pointer text-sm  transition-all duration-200' onClick={toggleSelectAll}>
+                {selectedSnippetIds.length === snippetsFiltered?.length ? 'Deselect all' : 'Select all'}
+              </button>
+              <button className='bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 px-4 py-2 rounded-lg flex items-center gap-2 cursor-pointer text-sm  transition-all duration-200' onClick={handleDelete}>
+                <FaRegTrashAlt size={16} />
+                Delete Selected
+              </button>
+              <button className='text-gray-300 bg-gray-400/5 hover:bg-gray-400/10 px-2 py-2 rounded-lg flex items-center gap-2 cursor-pointer transition-all duration-200' onClick={handleCloseSelectionMode}>
+                <IoClose size={18} />
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
