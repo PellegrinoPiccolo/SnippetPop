@@ -2,7 +2,7 @@ import React from 'react'
 import { ModalContext } from '../../context/ModalContext';
 import { IoWarningOutline } from "react-icons/io5";
 
-const DeleteWarning = ({ onDelete, numberOfItems, itemName }: { onDelete: () => void, numberOfItems: number | null, itemName: string | null }) => {
+const DeleteWarning = ({ onDelete, numberOfItems, itemName, type }: { onDelete: () => void, numberOfItems: number | null, itemName: string | null, type: "category" | "snippet" }) => {
 
     const {closeModal} = React.useContext(ModalContext);
 
@@ -24,9 +24,9 @@ const DeleteWarning = ({ onDelete, numberOfItems, itemName }: { onDelete: () => 
         </div>
         <div className='flex flex-col border-b p-8 border-[#161616]'>
             {numberOfItems && !itemName ? (
-                <p className="text-sm text-gray-400">{`This will delete ${numberOfItems} snippets.`}</p>
+                <p className="text-sm text-gray-400">{`This will delete ${numberOfItems} ${type === "category" ? "categories" : "snippets"}.`}</p>
             ) : itemName ? (
-                <p className="text-sm text-gray-400">{`This will delete the snippet "${itemName}".`}</p>
+                <p className="text-sm text-gray-400">{`This will delete the ${type === "category" ? "category" : "snippet"} "${itemName}".`}</p>
             ) : null}
         </div>
         <div className="flex justify-end gap-4 p-8">

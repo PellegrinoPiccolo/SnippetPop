@@ -60,7 +60,7 @@ const SnippetSection = () => {
 
     const handleDelete = () => {
         openModal(
-        <DeleteWarning onDelete={() => {deleteMultipleSnippets(selectedSnippetIds), setSelectedSnippetIds([]), setIsActiveSelectionMode(false)}} numberOfItems={selectedSnippetIds.length} itemName={null} />
+            <DeleteWarning onDelete={() => {deleteMultipleSnippets(selectedSnippetIds), setSelectedSnippetIds([]), setIsActiveSelectionMode(false)}} numberOfItems={selectedSnippetIds.length} itemName={null} type="snippet" />
         )
     }
 

@@ -38,7 +38,7 @@ const SnippetCard = ({snippet, categoryName, categoryColor} : {snippet: Snippet,
 
   const handleDelete = () => {
     openModal(
-      <DeleteWarning onDelete={() => deleteSnippet(snippet.id)} numberOfItems={null} itemName={snippet.title} />
+      <DeleteWarning onDelete={() => deleteSnippet(snippet.id)} numberOfItems={null} itemName={snippet.title} type="snippet" />
     )
   }
 

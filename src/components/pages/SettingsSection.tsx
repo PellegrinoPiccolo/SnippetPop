@@ -5,13 +5,25 @@ import React from 'react'
 import { FaPlus } from "react-icons/fa6";
 import { HiOutlineTag } from "react-icons/hi";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { ModalContext } from '@/context/ModalContext';
+import DeleteWarning from '../ui/DeleteWarning';
+import CreateCategory from '../ui/CreateCategory';
 
 const SettingsSection = () => {
 
-    const {categories} = React.useContext(SnippetContext)
+    const {categories, deleteCategory} = React.useContext(SnippetContext)
+    const {openModal} = React.useContext(ModalContext)
 
     const handleCreateNewCategory = () => {
+        openModal(
+            <CreateCategory />
+        )
+    }
 
+    const handleDeleteCategory = (category: { id: string; name: string }) => {
+        openModal(
+            <DeleteWarning onDelete={() => deleteCategory(category.id)} numberOfItems={null} itemName={category.name} type="category" />
+        )
     }
 
   return (
@@ -47,7 +59,7 @@ const SettingsSection = () => {
                                 <p className='text-gray-200'>{category.name}</p>
                             </div>
                         </div>
-                        <button className='hidden group-hover:flex bg-red-500/10 border border-red-500/30 text-red-400 p-2 rounded-sm transition-colors duration-200 cursor-pointer hover:bg-red-500/20' onClick={() => {}}>
+                        <button className='hidden group-hover:flex bg-red-500/10 border border-red-500/30 text-red-400 p-2 rounded-sm transition-colors duration-200 cursor-pointer hover:bg-red-500/20' onClick={() => handleDeleteCategory(category)}>
                             <FaRegTrashAlt size={14} />
                         </button>
                     </div>
