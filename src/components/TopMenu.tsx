@@ -4,14 +4,23 @@ import { FaPlus } from "react-icons/fa6";
 import { SearchContext } from '../context/SearchContext';
 import { FaRegTrashAlt } from "react-icons/fa";
 import { SnippetContext } from '../context/SnippetContext';
+import { ModalContext } from '../context/ModalContext';
+import CreateSnippet from './ui/CreateSnippet';
 
 const TopMenu = () => {
 
   const {setSearchQuery, searchQuery} = React.useContext(SearchContext)
   const {isActiveSelectionMode, setIsActiveSelectionMode} = React.useContext(SnippetContext)
+  const {openModal} = React.useContext(ModalContext)
 
   const onSearchTextChange = (text: string) => {
     setSearchQuery(text)
+  }
+
+  const handleCreateNewSnippet = () => {
+    openModal(
+      <CreateSnippet />
+    )
   }
 
   return (
@@ -26,7 +35,7 @@ const TopMenu = () => {
             Select
           </button>
         )}
-        <button className="px-3 py-2 bg-[#1A1A1A] text-white rounded-xl hover:bg-[#1E1E1E] transition-colors duration-200 flex flex-row items-center bg-gradient-to-br from-blue-500 to-purple-500 shadow-lg cursor-pointer">
+        <button className="px-3 py-2 bg-[#1A1A1A] text-white rounded-xl hover:bg-[#1E1E1E] transition-colors duration-200 flex flex-row items-center bg-gradient-to-br from-blue-500 to-purple-500 shadow-lg cursor-pointer" onClick={handleCreateNewSnippet}>
           <FaPlus size={12} />
           <span className="ml-2 text-sm font-medium">New Snippet</span>
         </button>

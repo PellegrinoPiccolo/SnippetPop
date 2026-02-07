@@ -7,7 +7,7 @@ export const SnippetContext = createContext({
     categories : [] as Category[],
     setCategories: (categories: Category[]) => {},
     saveCategories: (categories: Category[]) => {},
-    createSnippet: (snippet: Snippet, categoryId: string) => {},
+    createSnippet: (snippet: Snippet) => {},
     updateSnippet: (snippet: Snippet) => {},
     deleteSnippet: (snippetId: string) => {},
     deleteMultipleSnippets: (snippetIds: string[]) => {},
@@ -83,9 +83,9 @@ const SnippetProvider = ({ children }: { children: React.ReactNode }) => {
         setCategories(newCategories);
     }
 
-    const createSnippet = (newSnippet: Snippet, categoryId: string) => {
+    const createSnippet = (newSnippet: Snippet) => {
         const updatedCategories = categories.map(category => {
-            if (category.id === categoryId) {
+            if (category.id === newSnippet.categoryId) {
                 return {
                     ...category,
                     snippets: category.snippets ? [...category.snippets, newSnippet] : [newSnippet],
