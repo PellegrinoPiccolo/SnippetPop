@@ -10,6 +10,7 @@ export const SnippetContext = createContext({
     createSnippet: (snippet: Snippet, categoryId: string) => {},
     updateSnippet: (snippet: Snippet) => {},
     deleteSnippet: (snippetId: string) => {},
+    deleteMultipleSnippets: (snippetIds: string[]) => {},
     createCategory: (category: Category) => {},
     updateCategory: (category: Category) => {},
     deleteCategory: (categoryId: string) => {},
@@ -129,9 +130,19 @@ const SnippetProvider = ({ children }: { children: React.ReactNode }) => {
         setCategories(updatedCategories);
     }
 
+    const deleteMultipleSnippets = (snippetIds: string[]) => {
+        const updatedCategories = categories.map(category => {
+            if (category.snippets) {
+                const filteredSnippets = category.snippets.filter(snippet => !snippetIds.includes(snippet.id));
+                return { ...category, snippets: filteredSnippets };
+            }
+            return category;
+        });
+        setCategories(updatedCategories);
+    }
 
     return (
-        <SnippetContext.Provider value={{ categories, setCategories, saveCategories, createSnippet, updateSnippet, deleteSnippet, createCategory, updateCategory, deleteCategory, selectedCategoryId, setSelectedCategoryId, currentView, setCurrentView }}>
+        <SnippetContext.Provider value={{ categories, setCategories, saveCategories, createSnippet, updateSnippet, deleteSnippet, createCategory, updateCategory, deleteCategory, deleteMultipleSnippets, selectedCategoryId, setSelectedCategoryId, currentView, setCurrentView }}>
             {children}
         </SnippetContext.Provider>
     )

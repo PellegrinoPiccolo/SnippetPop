@@ -6,7 +6,11 @@ const Modal = ({content}: {content: React.ReactNode}) => {
     const {closeModal} = React.useContext(ModalContext);
 
   return (
-    <div>{content}</div>
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50" onClick={closeModal}>
+        <div className="bg-[#0A0A0A] rounded-lg w-full max-w-md border border-gray-400/20" onClick={(e) => e.stopPropagation()}>
+            {content}
+        </div>
+    </div>
   )
 }
 
