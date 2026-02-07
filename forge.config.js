@@ -10,7 +10,9 @@ export default {
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {},
+      config: {
+        setupIcon: 'public/logo.ico',
+      },
     },
     {
       name: '@electron-forge/maker-zip',
@@ -26,7 +28,10 @@ export default {
     },
     {
       name: '@electron-forge/maker-dmg',
-      config: {},
+      config: {
+        icon: 'public/logo.icns',
+        name: "SnippetPop Installer",
+      },
     }
   ],
   plugins: [
