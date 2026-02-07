@@ -22,6 +22,7 @@ export const SnippetContext = createContext({
     setIsActiveSelectionMode: (isActive: boolean) => {},
     selectedSnippetIds: [] as string[],
     setSelectedSnippetIds: (snippetIds: string[]) => {},
+    changeLibraryPath: async () => {},
 });
 
 const categoryId1 = uuidv4();
@@ -66,18 +67,79 @@ const DEFAULT_CATEGORIES: Category[] = [
 ];
 
 const SnippetProvider = ({ children }: { children: React.ReactNode }) => {
-    const [categories, setCategories] = useState<Category[]>(() => {
-        const saved = window.electronAPI.getStoreValue('categories');
-        return saved ? JSON.parse(saved) : DEFAULT_CATEGORIES;
-    });
+    const [categories, setCategories] = useState<Category[]>([]);
     const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
     const [currentView, setCurrentView] = useState<'snippets' | 'settings'>('snippets');
     const [isActiveSelectionMode, setIsActiveSelectionMode] = useState(false);
     const [selectedSnippetIds, setSelectedSnippetIds] = useState<string[]>([]);
 
     useEffect(() => {
-        window.electronAPI.setStoreValue('categories', JSON.stringify(categories));
+        async function loadData() {
+            try {
+                const saved = await window.electronAPI.getStoreValue('categories');
+                
+                if (Array.isArray(saved)) {
+                    setCategories(saved);
+                } else if (typeof saved === 'string') {
+                    try {
+                        setCategories(JSON.parse(saved));
+                    } catch (e) {
+                        console.error("Errore parsing JSON:", e);
+                        setCategories(DEFAULT_CATEGORIES);
+                    }
+                } else {
+                    setCategories(DEFAULT_CATEGORIES);
+                }
+            } catch (error) {
+                console.error("Errore critico caricamento dati:", error);
+                setCategories(DEFAULT_CATEGORIES);
+            }
+        }
+        loadData();
+    }, []);
+
+    useEffect(() => {
+        if (categories.length > 0) {
+            window.electronAPI.setStoreValue('categories', categories);
+        }
     }, [categories]);
+
+    const changeLibraryPath = async () => {
+        const result = await window.electronAPI.selectFolder();
+
+        if (!result || !result.path) return;
+
+        const { path, existingData } = result;
+        
+        let dataToFinalize = categories; 
+
+        if (existingData && Array.isArray(existingData) && existingData.length > 0) {
+            
+            const userChoice = window.confirm(
+                `Ho trovato dei dati esistenti nella cartella "${path}".\n\n` +
+                "PREMI OK per CARICARE i dati dal Cloud (i tuoi snippet locali attuali verranno persi).\n" +
+                "PREMI ANNULLA per SOVRASCRIVERE il Cloud con i tuoi dati locali."
+            );
+
+            if (userChoice) {
+                dataToFinalize = existingData;
+            } else {
+                const confirmOverwrite = window.confirm(
+                    "Sei sicuro? Stai per cancellare i dati nel cloud e sostituirli con i tuoi.\n" +
+                    "Questa operazione è irreversibile."
+                );
+                
+                if (!confirmOverwrite) {
+                    return; 
+                }
+            }
+        }
+        
+        await window.electronAPI.migrateData({
+            newPath: path,
+            currentData: dataToFinalize
+        });
+    };
 
     const saveCategories = (newCategories: Category[]) => {
         setCategories(newCategories);
@@ -188,7 +250,7 @@ const SnippetProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     return (
-        <SnippetContext.Provider value={{ categories, setCategories, saveCategories, createSnippet, updateSnippet, deleteSnippet, createCategory, updateCategory, deleteCategory, deleteMultipleSnippets, selectedCategoryId, setSelectedCategoryId, currentView, setCurrentView, isActiveSelectionMode, setIsActiveSelectionMode, selectedSnippetIds, setSelectedSnippetIds }}>
+        <SnippetContext.Provider value={{ categories, setCategories, saveCategories, createSnippet, updateSnippet, deleteSnippet, createCategory, updateCategory, deleteCategory, deleteMultipleSnippets, selectedCategoryId, setSelectedCategoryId, currentView, setCurrentView, isActiveSelectionMode, setIsActiveSelectionMode, selectedSnippetIds, setSelectedSnippetIds, changeLibraryPath }}>
             {children}
         </SnippetContext.Provider>
     )

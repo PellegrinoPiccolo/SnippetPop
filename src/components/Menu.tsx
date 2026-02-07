@@ -4,9 +4,14 @@ import { getIconComponent } from '../utils/icons';
 import { LuFiles } from "react-icons/lu";
 import { getColorHex } from '../utils/colors';
 import { LuSettings } from "react-icons/lu";
+import { IoFolderOpenOutline } from "react-icons/io5";
 
 const Menu = () => {
-  const {categories, selectedCategoryId, setSelectedCategoryId, currentView, setCurrentView} = React.useContext(SnippetContext);
+  const {categories, selectedCategoryId, setSelectedCategoryId, currentView, setCurrentView, changeLibraryPath} = React.useContext(SnippetContext);
+
+  const handleChangeLibraryPath = async () => {
+    await changeLibraryPath();
+  }
 
   const CategoryButtonRender = ({category}: {category: {id: string, name: string, icon: string, color: string}}) => {
     const isActive = selectedCategoryId === category.id && currentView === 'snippets';
@@ -70,7 +75,7 @@ const Menu = () => {
         ))}
       </div>
 
-      <div className="p-4 border-t border-[#1F1F1F]">
+      <div className="p-4 border-t border-[#1F1F1F] flex items-center gap-2">
         <button
           className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-200 cursor-pointer
           ${currentView === 'settings' ? 'bg-[#1E1E1E] text-white shadow-[0_6px_20px_rgba(0,0,0,0.35)]' : 'text-[#9B9B9B] hover:bg-[#1A1A1A] hover:text-white'}`}
@@ -80,6 +85,12 @@ const Menu = () => {
             <LuSettings />
           </span>
           <span className="text-xs font-medium">Category Settings</span>
+        </button>
+        <button
+          className='flex items-center gap-3 px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer text-[#9B9B9B] hover:bg-[#1A1A1A] hover:text-white'
+          onClick={handleChangeLibraryPath}
+        >
+          <IoFolderOpenOutline size={20} />
         </button>
       </div>
     </div>
