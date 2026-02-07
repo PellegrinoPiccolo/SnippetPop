@@ -7,9 +7,9 @@ import { HiOutlineTag } from "react-icons/hi";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { ModalContext } from '@/context/ModalContext';
 import DeleteWarning from '../ui/DeleteWarning';
-import CreateCategory from '../ui/CreateCategory';
 import { MdOutlineEdit } from "react-icons/md";
 import { Snippet } from '@/types/Snippet';
+import UpdateCategory from '../ui/UpdateCategory';
 
 const SettingsSection = () => {
 
@@ -18,7 +18,7 @@ const SettingsSection = () => {
 
     const handleCreateNewCategory = () => {
         openModal(
-            <CreateCategory type="create" />
+            <UpdateCategory type="create" />
         )
     }
 
@@ -27,7 +27,7 @@ const SettingsSection = () => {
         console.log(category);
         console.log('====================================');
         openModal(
-            <CreateCategory type="edit" id={category.id} name={category.name} color={category.color} icon={category.icon} snippets={category.snippets} />
+            <UpdateCategory type="edit" id={category.id} name={category.name} color={category.color} icon={category.icon} snippets={category.snippets} />
         )
     }
 

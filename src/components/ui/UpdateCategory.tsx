@@ -8,7 +8,7 @@ import React from 'react'
 import { IoClose } from "react-icons/io5";
 import { v4 as uuidv4 } from 'uuid';
 
-const CreateCategory = ({type, id, name, color, icon, snippets} : {type: "edit" | "create", id?: string, name?: string | undefined, color?: string | undefined, icon?: string | undefined, snippets?: Snippet[] | undefined }) => {
+const UpdateCategory = ({type, id, name, color, icon, snippets} : {type: "edit" | "create", id?: string, name?: string | undefined, color?: string | undefined, icon?: string | undefined, snippets?: Snippet[] | undefined }) => {
 
   const {closeModal} = React.useContext(ModalContext);
   const {createCategory, updateCategory} = React.useContext(SnippetContext);
@@ -62,7 +62,7 @@ const CreateCategory = ({type, id, name, color, icon, snippets} : {type: "edit" 
     <div className='flex flex-col'>
         <section className='flex flex-col border-b border-[#161616] px-8 py-4'>
           <section className='flex items-center justify-between'>
-              <h2 className='text-lg font-bold text-white'>Create New Category</h2>
+              <h2 className='text-lg font-bold text-white'>{type === "create" ? "Create New Category" : "Update Category"}</h2>
               <button className='p-2 rounded-lg hover:bg-gray-400/30 cursor-pointer' onClick={handleClose}>
                   <IoClose size={16} className='text-gray-400'/>
               </button>
@@ -113,4 +113,4 @@ const CreateCategory = ({type, id, name, color, icon, snippets} : {type: "edit" 
   )
 }
 
-export default CreateCategory
+export default UpdateCategory
