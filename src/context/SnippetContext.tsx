@@ -152,6 +152,19 @@ const SnippetProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     const updateCategory = (updatedCategory: Category) => {
+        if(updatedCategory.name.trim() === "") {
+            throw new Error("Category name cannot be empty.");
+        } else if (updatedCategory.name.length > 50) {
+            throw new Error("Category name cannot exceed 50 characters.");
+        } else if (!updatedCategory.color) {
+            throw new Error("Category color is required.");
+        } else if (!updatedCategory.icon) {
+            throw new Error("Category icon is required.");
+        } else if (categories.some(category => category.id !== updatedCategory.id && category.name.toLowerCase() === updatedCategory.name.toLowerCase())) {
+            throw new Error("A category with this name already exists.");
+        } else if (!categories.some(category => category.id === updatedCategory.id)) {
+            throw new Error("The category you are trying to update does not exist.");
+        }
         const updatedCategories = categories.map(category =>
             category.id === updatedCategory.id ? updatedCategory : category
         );

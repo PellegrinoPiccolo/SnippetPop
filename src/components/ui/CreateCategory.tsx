@@ -1,20 +1,21 @@
 import { ModalContext } from '@/context/ModalContext';
 import { SnippetContext } from '@/context/SnippetContext';
 import { Category } from '@/types/Category';
+import { Snippet } from '@/types/Snippet';
 import { AVAILABLE_COLORS, getColorHex } from '@/utils/colors'
 import { AVAILABLE_ICONS, getIconComponent } from '@/utils/icons';
 import React from 'react'
 import { IoClose } from "react-icons/io5";
 import { v4 as uuidv4 } from 'uuid';
 
-const CreateCategory = () => {
+const CreateCategory = ({type, id, name, color, icon, snippets} : {type: "edit" | "create", id?: string, name?: string | undefined, color?: string | undefined, icon?: string | undefined, snippets?: Snippet[] | undefined }) => {
 
   const {closeModal} = React.useContext(ModalContext);
-  const {createCategory} = React.useContext(SnippetContext);
+  const {createCategory, updateCategory} = React.useContext(SnippetContext);
 
-  const [categoryName, setCategoryName] = React.useState("");
-  const [selectedColor, setSelectedColor] = React.useState<string | null>(null);
-  const [selectedIcon, setSelectedIcon] = React.useState<string | null>(null);
+  const [categoryName, setCategoryName] = React.useState(name || "");
+  const [selectedColor, setSelectedColor] = React.useState<string | null>(color || null);
+  const [selectedIcon, setSelectedIcon] = React.useState<string | null>(icon || null);
   const [error, setError] = React.useState<string | null>(null);
 
   const handleClose = () => {
@@ -38,6 +39,22 @@ const CreateCategory = () => {
       handleClose();
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred while creating the category.");
+    }
+  }
+
+  const handleEditCategory = () => {
+    try {
+      const updatedCategory: Category = {
+        id: id!,
+        name: categoryName,
+        color: selectedColor!,
+        icon: selectedIcon!,
+        snippets: snippets || [],
+      };
+      updateCategory(updatedCategory);
+      handleClose();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "An error occurred while updating the category.");
     }
   }
 
@@ -89,7 +106,7 @@ const CreateCategory = () => {
           </div>
           <section className='flex justify-end gap-4 mt-4'>
               <button className='px-4 py-2 text-gray-400 rounded-lg hover:bg-gray-400/30 cursor-pointer' onClick={handleClose}>Cancel</button>
-              <button className='px-4 py-2 bg-blue-500/10 border border-blue-500/50 text-blue-500 rounded-lg hover:bg-blue-500/20 cursor-pointer' onClick={handleCreateCategory}>Create</button>
+              <button className='px-4 py-2 bg-blue-500/10 border border-blue-500/50 text-blue-500 rounded-lg hover:bg-blue-500/20 cursor-pointer' onClick={() => {type === "create" ? handleCreateCategory() : handleEditCategory()}}>Create</button>
           </section>
         </section>
     </div>

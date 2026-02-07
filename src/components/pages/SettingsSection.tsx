@@ -8,6 +8,8 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { ModalContext } from '@/context/ModalContext';
 import DeleteWarning from '../ui/DeleteWarning';
 import CreateCategory from '../ui/CreateCategory';
+import { MdOutlineEdit } from "react-icons/md";
+import { Snippet } from '@/types/Snippet';
 
 const SettingsSection = () => {
 
@@ -16,7 +18,16 @@ const SettingsSection = () => {
 
     const handleCreateNewCategory = () => {
         openModal(
-            <CreateCategory />
+            <CreateCategory type="create" />
+        )
+    }
+
+    const handleEditCategory = (category: { id: string; name: string; color: string; icon: string; snippets: Snippet[] }) => {
+        console.log('==============CAteg======================');
+        console.log(category);
+        console.log('====================================');
+        openModal(
+            <CreateCategory type="edit" id={category.id} name={category.name} color={category.color} icon={category.icon} snippets={category.snippets} />
         )
     }
 
@@ -59,9 +70,14 @@ const SettingsSection = () => {
                                 <p className='text-gray-200'>{category.name}</p>
                             </div>
                         </div>
-                        <button className='hidden group-hover:flex bg-red-500/10 border border-red-500/30 text-red-400 p-2 rounded-sm transition-colors duration-200 cursor-pointer hover:bg-red-500/20' onClick={() => handleDeleteCategory(category)}>
-                            <FaRegTrashAlt size={14} />
-                        </button>
+                        <div className='flex items-center'>
+                            <button className='hidden group-hover:flex bg-gray-500/10 border border-gray-500/30 text-gray-400 p-2 rounded-sm transition-colors duration-200 cursor-pointer hover:bg-gray-500/20 mr-2' onClick={() => handleEditCategory(category as { id: string; name: string; color: string; icon: string; snippets: Snippet[] })}>
+                                <MdOutlineEdit size={14} />
+                            </button>
+                            <button className='hidden group-hover:flex bg-red-500/10 border border-red-500/30 text-red-400 p-2 rounded-sm transition-colors duration-200 cursor-pointer hover:bg-red-500/20' onClick={() => handleDeleteCategory(category)}>
+                                <FaRegTrashAlt size={14} />
+                            </button>
+                        </div>
                     </div>
                 ))}
             </div>
