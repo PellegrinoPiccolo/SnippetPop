@@ -5,6 +5,7 @@ import { LuFiles } from "react-icons/lu";
 import { getColorHex } from '../utils/colors';
 import { LuSettings } from "react-icons/lu";
 import { LuFolderSync } from "react-icons/lu";
+import logoPng from '../../public/logo.png';
 
 const Menu = () => {
   const {categories, selectedCategoryId, setSelectedCategoryId, currentView, setCurrentView, changeLibraryPath} = React.useContext(SnippetContext);
@@ -42,7 +43,7 @@ const Menu = () => {
       <div className="px-4 pt-5 pb-3">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl flex items-center justify-center shadow-lg bg-[#1A1A1A]">
-            <img src="/logo.png" alt="Logo" className="w-6 h-6" />
+            <img src={logoPng} alt="Logo" className="w-6 h-6" />
           </div>
           <div className="leading-tight">
             <h2 className="text-base font-semibold">SnippetPop</h2>
