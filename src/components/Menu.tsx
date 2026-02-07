@@ -79,7 +79,7 @@ const Menu = () => {
           <span className={`text-lg rounded-xl p-2 ${currentView === 'settings' ? 'bg-gradient-to-br from-blue-500 to-purple-500 shadow-lg' : 'bg-[#141414]'}`}>
             <LuSettings />
           </span>
-          <span className="text-xs font-medium">Settings</span>
+          <span className="text-xs font-medium">Category Settings</span>
         </button>
       </div>
     </div>
