@@ -4,12 +4,15 @@ import { FuseV1Options, FuseVersion } from '@electron/fuses';
 export default {
   packagerConfig: {
     asar: true,
+    icon: 'public/logo',
   },
   rebuildConfig: {},
   makers: [
     {
       name: '@electron-forge/maker-squirrel',
-      config: {},
+      config: {
+        setupIcon: 'public/logo.ico',
+      },
     },
     {
       name: '@electron-forge/maker-zip',
@@ -25,7 +28,10 @@ export default {
     },
     {
       name: '@electron-forge/maker-dmg',
-      config: {},
+      config: {
+        icon: 'public/logo.icns',
+        name: "SnippetPop Installer",
+      },
     }
   ],
   plugins: [
