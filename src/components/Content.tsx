@@ -10,16 +10,8 @@ const Content = () => {
 
   const {currentView} = React.useContext(SnippetContext);
 
-  // Settings section
-  if (currentView === 'settings') {
-    return (
-      <SettingsSection />
-    )
-  }
-
-  // Snippet section
   return (
-    <SnippetSection />
+    currentView === 'snippets' ? <SnippetSection /> : <SettingsSection />
   )
 }
 
