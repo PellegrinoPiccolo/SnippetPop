@@ -12,7 +12,31 @@ const rootStore = new Store();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const isMac = process.platform === 'darwin';
+
 function setupHandlers() {
+  ipcMain.on('window-control', (event, action) => {
+    const win = BrowserWindow.fromWebContents(event.sender);
+    if (!win) return;
+
+    switch (action) {
+      case 'minimize':
+        win.minimize();
+        break;
+      case 'maximize':
+        if (win.isMaximized()) {
+          win.unmaximize();
+        } else {
+          win.maximize();
+        }
+        break;
+      case 'close':
+        win.close();
+        break;
+    }
+  });
+
+
   ipcMain.on('get-custom-path', (event) => {
     event.returnValue = rootStore.get('customPath') || undefined;
   });
@@ -83,8 +107,11 @@ function setupHandlers() {
 function createWindow() {
   const win = new BrowserWindow({
     width: 1400,
-    height: 800,
+    height: 900,
+    minHeight: 800,
+    minWidth: 1200,
     backgroundColor: '#1e1e1e',
+    frame: isMac ? true : false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       sandbox: false,

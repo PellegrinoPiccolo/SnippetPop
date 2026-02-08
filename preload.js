@@ -15,4 +15,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
   selectFolder: () => ipcRenderer.invoke('dialog:openDirectory'),
   migrateData: (payload) => ipcRenderer.invoke('migrate-data', payload),
+
+  minimize: () => ipcRenderer.send('window-control', 'minimize'),
+  maximize: () => ipcRenderer.send('window-control', 'maximize'),
+  close: () => ipcRenderer.send('window-control', 'close'),
+  platform: process.platform
 })
