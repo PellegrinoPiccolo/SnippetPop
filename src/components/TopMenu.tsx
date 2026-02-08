@@ -10,7 +10,7 @@ import CreateSnippet from './ui/CreateSnippet';
 const TopMenu = () => {
 
   const {setSearchQuery, searchQuery} = React.useContext(SearchContext)
-  const {isActiveSelectionMode, setIsActiveSelectionMode} = React.useContext(SnippetContext)
+  const {isActiveSelectionMode, setIsActiveSelectionMode, actualCategory} = React.useContext(SnippetContext)
   const {openModal} = React.useContext(ModalContext)
 
   const onSearchTextChange = (text: string) => {
@@ -19,7 +19,7 @@ const TopMenu = () => {
 
   const handleCreateNewSnippet = () => {
     openModal(
-      <CreateSnippet />
+      <CreateSnippet initialCategoryId={actualCategory?.id || null} />
     )
   }
 

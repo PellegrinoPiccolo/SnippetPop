@@ -13,26 +13,25 @@ import { getColorHex } from '@/utils/colors';
 
 const SnippetSection = () => {
 
-    const {currentView, selectedCategoryId, categories, selectedSnippetIds, isActiveSelectionMode, setIsActiveSelectionMode, setSelectedSnippetIds, deleteMultipleSnippets} = React.useContext(SnippetContext);
+    const {currentView, selectedCategoryId, categories, selectedSnippetIds, isActiveSelectionMode, setIsActiveSelectionMode, setSelectedSnippetIds, deleteMultipleSnippets, actualCategory, setActualCategory} = React.useContext(SnippetContext);
     const {snippetsFiltered, searchQuery} = React.useContext(SearchContext);
-    const [actualCategory, setActualCategory] = React.useState(null as Category | null);
     const {openModal} = React.useContext(ModalContext)
 
     React.useEffect(() => {
         if (currentView === 'snippets') {
-        let category = categories.find((cat) => cat.id === selectedCategoryId);
-        if (!category) {
-            category = {
-            id: '',
-            name: 'All Snippets',
-            icon: '',
-            color: '',
-            snippets: snippetsFiltered || [],
+            let category = categories.find((cat) => cat.id === selectedCategoryId);
+            if (!category) {
+                category = {
+                    id: '',
+                    name: 'All Snippets',
+                    icon: '',
+                    color: '',
+                    snippets: snippetsFiltered || [],
+                }
             }
-        }
-        setActualCategory(category);
+            setActualCategory(category);
         } else {
-        setActualCategory(null);
+            setActualCategory(null);
         }
     }, [currentView, selectedCategoryId, categories, snippetsFiltered]);
 
@@ -83,7 +82,7 @@ const SnippetSection = () => {
                 
                 <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {snippetsFiltered?.map((snippet) => (
-                    <RenderSnippet key={snippet.id} {...snippet} />
+                        <RenderSnippet key={snippet.id} {...snippet} />
                     ))}
                 </div>
 

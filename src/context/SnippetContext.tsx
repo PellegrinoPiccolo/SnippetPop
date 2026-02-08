@@ -23,6 +23,8 @@ export const SnippetContext = createContext({
     selectedSnippetIds: [] as string[],
     setSelectedSnippetIds: (snippetIds: string[]) => {},
     changeLibraryPath: async () => {},
+    actualCategory: null as Category | null,
+    setActualCategory: (category: Category | null) => {},
 });
 
 const categoryId1 = uuidv4();
@@ -72,6 +74,7 @@ const SnippetProvider = ({ children }: { children: React.ReactNode }) => {
     const [currentView, setCurrentView] = useState<'snippets' | 'settings'>('snippets');
     const [isActiveSelectionMode, setIsActiveSelectionMode] = useState(false);
     const [selectedSnippetIds, setSelectedSnippetIds] = useState<string[]>([]);
+    const [actualCategory, setActualCategory] = useState<Category | null>(null);
 
     useEffect(() => {
         async function loadData() {
@@ -250,7 +253,7 @@ const SnippetProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     return (
-        <SnippetContext.Provider value={{ categories, setCategories, saveCategories, createSnippet, updateSnippet, deleteSnippet, createCategory, updateCategory, deleteCategory, deleteMultipleSnippets, selectedCategoryId, setSelectedCategoryId, currentView, setCurrentView, isActiveSelectionMode, setIsActiveSelectionMode, selectedSnippetIds, setSelectedSnippetIds, changeLibraryPath }}>
+        <SnippetContext.Provider value={{ categories, setCategories, saveCategories, createSnippet, updateSnippet, deleteSnippet, createCategory, updateCategory, deleteCategory, deleteMultipleSnippets, selectedCategoryId, setSelectedCategoryId, currentView, setCurrentView, isActiveSelectionMode, setIsActiveSelectionMode, selectedSnippetIds, setSelectedSnippetIds, actualCategory, setActualCategory, changeLibraryPath }}>
             {children}
         </SnippetContext.Provider>
     )
