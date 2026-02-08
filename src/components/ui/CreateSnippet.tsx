@@ -13,11 +13,11 @@ import {
 } from "@/components/ui/select"
 import { v4 as uuidv4 } from 'uuid';
 
-const CreateSnippet = () => {
+const CreateSnippet = ({initialCategoryId} : {initialCategoryId?: string | null}) => {
 
     const [newSnippetTitle, setNewSnippetTitle] = React.useState("");
     const [newSnippetContent, setNewSnippetContent] = React.useState("");
-    const [selectedCategory, setSelectedCategory] = React.useState<string | null>(null);
+    const [selectedCategory, setSelectedCategory] = React.useState<string | null>(initialCategoryId || null);
     const [error, setError] = React.useState<string | null>(null);
 
     const {closeModal} = React.useContext(ModalContext);
@@ -68,7 +68,7 @@ const CreateSnippet = () => {
             </div>
             <section className='flex flex-col gap-1 border-b border-[#161616] pb-4'>
                 <label htmlFor='category' className='text-sm text-gray-400'>Category</label>
-                <Select onValueChange={(value) => setSelectedCategory(value)}>
+                <Select onValueChange={(value) => setSelectedCategory(value)} defaultValue={initialCategoryId || undefined}>
                     <SelectTrigger className='w-full text-gray-200'>
                         <SelectValue placeholder="Select a category" />
                     </SelectTrigger>
