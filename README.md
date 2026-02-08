@@ -7,13 +7,33 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/PellegrinoPiccolo/SnippetPop/releases/download/V-1.0/SnippetPop-win32-x64.zip">
+  <a href="https://github.com/PellegrinoPiccolo/SnippetPop/releases/download/V-1.1/SnippetPop-win32-x64.zip">
     <img src="https://img.shields.io/badge/Download-Windows%20.zip-blue?style=for-the-badge&logo=windows" alt="Windows Download" />
   </a>
-  <a href="https://github.com/PellegrinoPiccolo/SnippetPop/releases/download/V-1.0/SnippetPop.Installer.dmg">
+  <a href="https://github.com/PellegrinoPiccolo/SnippetPop/releases/download/V-1.1/SnippetPop.Installer.dmg">
     <img src="https://img.shields.io/badge/Download-macOS%20.dmg-black?style=for-the-badge&logo=apple" alt="macOS Download" />
   </a>
 </p>
+
+## 🔒 Security & Installation Note
+
+Since SnippetPop is an independent project and not signed with a paid developer certificate, you may encounter system warnings.
+
+### For macOS Users 🍎
+If you see a message saying **"SnippetPop is damaged and cannot be opened"**:
+1. Move SnippetPop to your **Applications** folder.
+2. Open the **Terminal** app.
+3. Type the following command and press Enter:
+   `sudo xattr -cr /Applications/SnippetPop.app`
+4. Enter your Mac password when prompted (it will remain invisible while typing).
+5. Launch the app normally from your Applications.
+
+### For Windows Users 🪟
+If you downloaded the **.zip** version:
+1. **Extract** the entire folder to a location of your choice (e.g., `Documents` or `Desktop`).
+2. Open the folder and run **`SnippetPop.exe`**.
+3. *Tip:* Right-click `SnippetPop.exe` and select **"Create shortcut"** (or "Pin to Start") for quicker access.
+4. If a "Windows Protected your PC" (SmartScreen) popup appears, click **"More info"** and then **"Run anyway"**.
 
 ---
 
