@@ -209,3 +209,13 @@
   background-color: #e11d48 !important;
   color: #ffffff;
 }
+
+:root {
+  --titlebar-height-win: 32px;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding-top: var(--titlebar-height-win);
+}
