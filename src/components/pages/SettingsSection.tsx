@@ -13,6 +13,8 @@ import UpdateCategory from '../ui/UpdateCategory';
 
 const SettingsSection = () => {
 
+    const isMac = window.electronAPI.platform === 'darwin';
+
     const {categories, deleteCategory} = React.useContext(SnippetContext)
     const {openModal} = React.useContext(ModalContext)
 
@@ -38,7 +40,7 @@ const SettingsSection = () => {
     }
 
   return (
-    <div className="h-full bg-black py-8 px-10 overflow-y-auto">
+    <div className={`${isMac ? '' : 'pt-18'} h-full bg-black py-8 px-10 overflow-y-auto`}>
         <h1 className="text-2xl font-bold text-white">Category Settings</h1>
         <div className='p-4 bg-[#0A0A0A] border border-gray-400/20 mt-10 rounded-lg flex flex-col'>
             <div className='flex items-center justify-between'>
