@@ -7,8 +7,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/PellegrinoPiccolo/SnippetPop/releases/download/V-1.2/SnippetPop-win32-x64.zip">
-    <img src="https://img.shields.io/badge/Download-Windows%20.zip-blue?style=for-the-badge&logo=windows" alt="Windows Download" />
+  <a href="https://github.com/PellegrinoPiccolo/SnippetPop/releases/download/V-1.2/SnippetPopSetup.exe">
+    <img src="https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows" alt="Windows Download" />
   </a>
   <a href="https://github.com/PellegrinoPiccolo/SnippetPop/releases/download/V-1.2/SnippetPop.Installer.dmg">
     <img src="https://img.shields.io/badge/Download-macOS%20.dmg-black?style=for-the-badge&logo=apple" alt="macOS Download" />
@@ -29,11 +29,12 @@ If you see a message saying **"SnippetPop is damaged and cannot be opened"**:
 5. Launch the app normally from your Applications.
 
 ### For Windows Users 🪟
-If you downloaded the **.zip** version:
-1. **Extract** the entire folder to a location of your choice (e.g., `Documents` or `Desktop`).
-2. Open the folder and run **`SnippetPop.exe`**.
-3. *Tip:* Right-click `SnippetPop.exe` and select **"Create shortcut"** (or "Pin to Start") for quicker access.
-4. If a "Windows Protected your PC" (SmartScreen) popup appears, click **"More info"** and then **"Run anyway"**.
+1. Download and run **`SnippetPopSetup.exe`**.
+2. If a **"Windows Protected your PC"** (SmartScreen) popup appears:
+   - Click on **"More info"**.
+   - Click on **"Run anyway"**.
+3. Follow the installation wizard. You can choose to create a desktop shortcut during the process.
+4. Once finished, SnippetPop will be available in your **Start Menu** and on your **Desktop**.
 
 ---
 
@@ -93,7 +94,7 @@ When you change the library folder, the app migrates your data to the new locati
 * **Frontend**: [React](https://reactjs.org/) with TypeScript
 * **Build Tool**: [Vite](https://vitejs.dev/) & [Electron Forge](https://www.electronforge.io/)
 * **Database**: `electron-store`
-* **Installer**: NSIS (Windows) & DMG (macOS)
+* **Installer**: Inno Setup (Windows) & DMG (macOS)
 
 ---
 
