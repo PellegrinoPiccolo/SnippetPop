@@ -7,10 +7,10 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/PellegrinoPiccolo/SnippetPop/releases/download/V-1.0/SnippetPop-win32-x64.zip">
+  <a href="https://github.com/PellegrinoPiccolo/SnippetPop/releases/download/V-1.1/SnippetPop-win32-x64.zip">
     <img src="https://img.shields.io/badge/Download-Windows%20.zip-blue?style=for-the-badge&logo=windows" alt="Windows Download" />
   </a>
-  <a href="https://github.com/PellegrinoPiccolo/SnippetPop/releases/download/V-1.0/SnippetPop.Installer.dmg">
+  <a href="https://github.com/PellegrinoPiccolo/SnippetPop/releases/download/V-1.1/SnippetPop.Installer.dmg">
     <img src="https://img.shields.io/badge/Download-macOS%20.dmg-black?style=for-the-badge&logo=apple" alt="macOS Download" />
   </a>
 </p>
