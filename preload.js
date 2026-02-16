@@ -19,5 +19,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   minimize: () => ipcRenderer.send('window-control', 'minimize'),
   maximize: () => ipcRenderer.send('window-control', 'maximize'),
   close: () => ipcRenderer.send('window-control', 'close'),
+  setLayout: (key, value) => store.set(key, value),
+  getLayout: (key) => store.get(key),
   platform: process.platform
 })
