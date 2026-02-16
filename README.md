@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/PellegrinoPiccolo/SnippetPop/releases/download/V-1.3/SnippetPopSetup.exe">
+  <a href="https://github.com/PellegrinoPiccolo/SnippetPop/releases/download/V-1.4.0/SnippetPopSetup.exe">
     <img src="https://img.shields.io/badge/Download-Windows%20.exe-blue?style=for-the-badge&logo=windows" alt="Windows Download" />
   </a>
   <a href="https://github.com/PellegrinoPiccolo/SnippetPop/releases/download/V-1.2/SnippetPop.Installer.dmg">
