@@ -45,6 +45,13 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
