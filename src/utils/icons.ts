@@ -1,6 +1,6 @@
 import { MdOutlineWorkOutline, MdOutlineSchool, MdOutlineLocalLibrary, MdOutlineCode, MdOutlineFavoriteBorder } from "react-icons/md";
 import { GoHome, GoRocket } from "react-icons/go";
-import { FaRegUser, FaRegLightbulb, FaRegFolderOpen } from "react-icons/fa";
+import { FaRegUser, FaRegLightbulb, FaRegFolderOpen, FaGamepad } from "react-icons/fa";
 import { HiOutlineDocumentText } from "react-icons/hi";
 
 export const ICON_MAP: Record<string, React.ComponentType> = {
@@ -15,6 +15,7 @@ export const ICON_MAP: Record<string, React.ComponentType> = {
     'docs': HiOutlineDocumentText,
     'folder': FaRegFolderOpen,
     'favorite': MdOutlineFavoriteBorder,
+    'gamepad': FaGamepad,
 };
 
 export const AVAILABLE_ICONS = Object.keys(ICON_MAP);

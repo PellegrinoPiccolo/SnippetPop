@@ -6,6 +6,8 @@ export interface ElectronAPI {
   minimize: () => void;
   maximize: () => void;
   close: () => void;
+  setLayout: (key: string, value: any) => void;
+  getLayout: (key: string) => any;
   platform: string;
 }
 

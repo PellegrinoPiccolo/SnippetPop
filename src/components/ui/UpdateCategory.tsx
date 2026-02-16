@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 const UpdateCategory = ({type, id, name, color, icon, snippets} : {type: "edit" | "create", id?: string, name?: string | undefined, color?: string | undefined, icon?: string | undefined, snippets?: Snippet[] | undefined }) => {
 
   const {closeModal} = React.useContext(ModalContext);
-  const {createCategory, updateCategory} = React.useContext(SnippetContext);
+  const {createCategory, updateCategory, categories} = React.useContext(SnippetContext);
 
   const [categoryName, setCategoryName] = React.useState(name || "");
   const [selectedColor, setSelectedColor] = React.useState<string | null>(color || null);
@@ -34,6 +34,7 @@ const UpdateCategory = ({type, id, name, color, icon, snippets} : {type: "edit" 
         color: selectedColor!,
         icon: selectedIcon!,
         snippets: [],
+        order: categories.map(c => c.order).reduce((max, curr) => Math.max(max, curr), 0) + 1
       };
       createCategory(newCategory);
       handleClose();
@@ -50,6 +51,7 @@ const UpdateCategory = ({type, id, name, color, icon, snippets} : {type: "edit" 
         color: selectedColor!,
         icon: selectedIcon!,
         snippets: snippets || [],
+        order: categories.find(c => c.id === id)?.order || 0
       };
       updateCategory(updatedCategory);
       handleClose();

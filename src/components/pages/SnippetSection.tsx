@@ -27,6 +27,7 @@ const SnippetSection = () => {
                     icon: '',
                     color: '',
                     snippets: snippetsFiltered || [],
+                    order: 0
                 }
             }
             setActualCategory(category);
