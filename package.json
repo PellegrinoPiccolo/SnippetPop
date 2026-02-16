@@ -3,7 +3,7 @@
   "author": "Pellegrino Piccolo",
   "description": "A snippet manager built with Electron, React, and Tailwind CSS.",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.4.0",
   "type": "module",
   "main": "main.js",
   "scripts": {

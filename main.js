@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, dialog } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog, shell, net } from 'electron';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Store from 'electron-store';
@@ -35,7 +35,6 @@ function setupHandlers() {
         break;
     }
   });
-
 
   ipcMain.on('get-custom-path', (event) => {
     event.returnValue = rootStore.get('customPath') || undefined;
@@ -104,6 +103,51 @@ function setupHandlers() {
   });
 }
 
+  function checkForUpdates() {
+    const request = net.request('https://api.github.com/repos/PellegrinoPiccolo/SnippetPop/releases/latest');
+
+    request.on('response', (response) => {
+      let data = '';
+
+      response.on('data', (chunk) => {
+      data += chunk;
+      });
+
+      response.on('end', () => {
+      try {
+        const release = JSON.parse(data);
+        const latestVersion = release.tag_name.replace('V-', '');
+        const currentVersion = app.getVersion();
+        if (latestVersion > currentVersion) {
+        const updateMessage = `A new version of SnippetPop is available: ${latestVersion} (your version: ${currentVersion}). Do you want to download it?`;
+        dialog.showMessageBox({
+          type: 'info',
+          buttons: ['Yes', 'No'],
+          title: 'Update Available',
+          message: updateMessage
+        }).then(result => {
+          if (result.response === 0) {
+          shell.openExternal(release.html_url);
+          }
+        });
+        }       
+      } catch (e) {
+        console.error('Error during update check:', e);
+      }
+      })
+
+      response.on('error', (e) => {
+      console.error('Error in update check response:', e);
+      });
+    })
+
+    request.on('error', (e) => {
+      console.error('Error during update check request:', e);
+    });
+
+    request.end();
+  }
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 1400,
@@ -130,6 +174,7 @@ function createWindow() {
 app.whenReady().then(() => {
   setupHandlers();
   createWindow();
+  checkForUpdates();
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
