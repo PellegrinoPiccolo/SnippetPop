@@ -1,3 +1,4 @@
+import { clear } from 'console';
 import { contextBridge, ipcRenderer } from 'electron'
 import Store from 'electron-store';
 
@@ -12,6 +13,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getStoreValue: (key) => store.get(key),
   setStoreValue: (key, value) => store.set(key, value),
   deleteStoreValue: (key) => store.delete(key),
+  clearStore: () => store.clear(),
 
   selectFolder: () => ipcRenderer.invoke('dialog:openDirectory'),
   migrateData: (payload) => ipcRenderer.invoke('migrate-data', payload),

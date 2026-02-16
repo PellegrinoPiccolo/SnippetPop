@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import type { Category } from "../types/Category";
 import type { Snippet } from "../types/Snippet";
 import { v4 as uuidv4 } from 'uuid';
+import {move} from '@dnd-kit/helpers';
 
 export const SnippetContext = createContext({
     categories : [] as Category[],
@@ -25,6 +26,7 @@ export const SnippetContext = createContext({
     changeLibraryPath: async () => {},
     actualCategory: null as Category | null,
     setActualCategory: (category: Category | null) => {},
+    reorderCategories: (event: any) => {},
 });
 
 const categoryId1 = uuidv4();
@@ -44,6 +46,7 @@ const DEFAULT_CATEGORIES: Category[] = [
             { id: uuidv4(), title: 'SQL Connection String', content: 'Server=localhost;Database=mydb;User Id=admin;Password=***', categoryId: categoryId1 },
             { id: uuidv4(), title: 'API Key - Production', content: 'sk_prod_1234567890abcdefg...', categoryId: categoryId1 },
         ],
+        order: 1
     },
     {
         id: categoryId2,
@@ -54,6 +57,7 @@ const DEFAULT_CATEGORIES: Category[] = [
             { id: uuidv4(), title: 'Home Router Password', content: 'HomeNetwork2024!', categoryId: categoryId2 },
             { id: uuidv4(), title: 'Grocery List Template', content: '– Milk – Eggs – Bread', categoryId: categoryId2 },
         ],
+        order: 2
     },
     {
         id: categoryId3,
@@ -65,6 +69,7 @@ const DEFAULT_CATEGORIES: Category[] = [
             { id: uuidv4(), title: 'GitHub Profile URL', content: 'https://github.com/johndoe', categoryId: categoryId3 },
             { id: uuidv4(), title: 'Doctor Appointment Reminder', content: 'Dr. Smith — Thursday 3:00 PM — 555-0123', categoryId: categoryId3 },
         ],
+        order: 3
     },
 ];
 
@@ -82,20 +87,20 @@ const SnippetProvider = ({ children }: { children: React.ReactNode }) => {
                 const saved = await window.electronAPI.getStoreValue('categories');
                 
                 if (Array.isArray(saved)) {
-                    setCategories(saved);
+                    setCategories(saved.sort((a: Category, b: Category) => a.order - b.order));
                 } else if (typeof saved === 'string') {
                     try {
-                        setCategories(JSON.parse(saved));
+                        setCategories(JSON.parse(saved).sort((a: Category, b: Category) => a.order - b.order));
                     } catch (e) {
                         console.error("Errore parsing JSON:", e);
-                        setCategories(DEFAULT_CATEGORIES);
+                        setCategories(DEFAULT_CATEGORIES.sort((a, b) => a.order - b.order));
                     }
                 } else {
-                    setCategories(DEFAULT_CATEGORIES);
+                    setCategories(DEFAULT_CATEGORIES.sort((a, b) => a.order - b.order));
                 }
             } catch (error) {
                 console.error("Errore critico caricamento dati:", error);
-                setCategories(DEFAULT_CATEGORIES);
+                setCategories(DEFAULT_CATEGORIES.sort((a, b) => a.order - b.order));
             }
         }
         loadData();
@@ -252,8 +257,15 @@ const SnippetProvider = ({ children }: { children: React.ReactNode }) => {
         setCategories(updatedCategories);
     }
 
+    const reorderCategories = (event: any) => {
+        setCategories((categories) => {
+            const newCategories = move(categories, event);
+            return newCategories.map((category, index) => ({ ...category, order: index + 1 }));
+        });
+    }
+
     return (
-        <SnippetContext.Provider value={{ categories, setCategories, saveCategories, createSnippet, updateSnippet, deleteSnippet, createCategory, updateCategory, deleteCategory, deleteMultipleSnippets, selectedCategoryId, setSelectedCategoryId, currentView, setCurrentView, isActiveSelectionMode, setIsActiveSelectionMode, selectedSnippetIds, setSelectedSnippetIds, actualCategory, setActualCategory, changeLibraryPath }}>
+        <SnippetContext.Provider value={{ categories, setCategories, saveCategories, createSnippet, updateSnippet, deleteSnippet, createCategory, updateCategory, deleteCategory, deleteMultipleSnippets, selectedCategoryId, setSelectedCategoryId, currentView, setCurrentView, isActiveSelectionMode, setIsActiveSelectionMode, selectedSnippetIds, setSelectedSnippetIds, actualCategory, setActualCategory, changeLibraryPath, reorderCategories }}>
             {children}
         </SnippetContext.Provider>
     )

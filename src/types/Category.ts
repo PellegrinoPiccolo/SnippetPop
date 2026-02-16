@@ -6,4 +6,5 @@ export interface Category {
   icon: string;
   color: string;
   snippets?: Snippet[];
+  order: number;
 }
