@@ -115,10 +115,20 @@ function setupHandlers() {
 
       response.on('end', () => {
       try {
+        function isNewerVersion(latest, current) {
+          const l = latest.split('.').map(Number);
+          const c = current.split('.').map(Number);
+
+          for (let i = 0; i < 3; i++) {
+              if (l[i] > c[i]) return true;
+              if (l[i] < c[i]) return false;
+          }
+          return false;
+        }
         const release = JSON.parse(data);
         const latestVersion = release.tag_name.replace('V-', '');
         const currentVersion = app.getVersion();
-        if (latestVersion > currentVersion) {
+        if (isNewerVersion(latestVersion, currentVersion)) {
         const updateMessage = `A new version of SnippetPop is available: ${latestVersion} (your version: ${currentVersion}). Do you want to download it?`;
         dialog.showMessageBox({
           type: 'info',
